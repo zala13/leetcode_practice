@@ -39,3 +39,6 @@
 
 # debug information files
 *.dwo
+
+# 根目录无关文件夹
+/.lcpr_data
