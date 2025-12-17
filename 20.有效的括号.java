@@ -1,87 +1,61 @@
-//
-////leetcode submit region begin(Prohibit modification and deletion)
-//class Solution {
-//    public boolean isValid(String s) {
-//        if (s.length() == 0 || s.length() == 1) {
-//            return false;
-//        }
-//
-//        Stack<Character> stk = new Stack<>();
-//        for (int i = 0; i < s.length(); i++) {
-//            char ch = s.charAt(i);
-//            if (ch == ")") {
-//                if (stk.isEmpty()) {
-//                    return false;
-//                }
-//                char topChar = stk.peek();
-//                stk.pop();
-//                if (topChar != "(") {
-//                    return false;
-//                }
-//            } else if (ch == "]") {
-//                if (stk.isEmpty()) {
-//                    return false;
-//                }
-//                char topChar = stk.peek();
-//                stk.pop();
-//                if (topChar != "[") {
-//                    return false;
-//                }
-//
-//            } else if (ch == "}") {
-//                if (stk.isEmpty()) {
-//                    return false;
-//                }
-//                char topChar = stk.peek();
-//                stk.pop();
-//                if (topChar != "{") {
-//                    return false;
-//                }
-//
-//            } else {
-//                stk.push(ch);
-//            }
-//        }
-//
-//    }
-//}
-////leetcode submit region end(Prohibit modification and deletion)
+/*
+ * @lc app=leetcode.cn id=20 lang=java
+ * @lcpr version=30305
+ *
+ * [20] 有效的括号
+ */
 
-import java.util.Deque;
-import java.util.LinkedList;
+// @lc code=start
+
+import java.util.List;
 
 class Solution {
     public boolean isValid(String s) {
-        // 边界条件修正：空字符串有效，长度为奇数直接无效（优化）
-        if (s.isEmpty()) {
-            return true;
-        }
-        if (s.length() % 2 != 0) {
-            return false;
-        }
-
-        // 用Deque替代Stack（更规范）
-        Deque<Character> stk = new LinkedList<>();
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            // 左括号入栈
-            if (ch == '(' || ch == '[' || ch == '{') {
-                stk.push(ch);
+        List<Character> stk = new ArrayList<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stk.add(c);
             } else {
-                // 右括号时栈为空，直接无效
                 if (stk.isEmpty()) {
                     return false;
                 }
-                // 弹出栈顶匹配
-                char topChar = stk.pop();
-                if ((ch == ')' && topChar != '(')
-                        || (ch == ']' && topChar != '[')
-                        || (ch == '}' && topChar != '{')) {
+                char top = stk.get(stk.size() - 1);
+                if ((top == '(' && c != ')') || 
+                    (top == '[' && c != ']') ||
+                    (top == '{' && c != '}')) {
                     return false;
+                } else {
+                    stk.remove(stk.size() - 1);
                 }
             }
         }
-        // 最终栈为空才有效（无剩余左括号）
         return stk.isEmpty();
     }
 }
+// @lc code=end
+
+
+
+/*
+// @lcpr case=start
+// "()"\n
+// @lcpr case=end
+
+// @lcpr case=start
+// "()[]{}"\n
+// @lcpr case=end
+
+// @lcpr case=start
+// "(]"\n
+// @lcpr case=end
+
+// @lcpr case=start
+// "([])"\n
+// @lcpr case=end
+
+// @lcpr case=start
+// "([)]"\n
+// @lcpr case=end
+
+ */
+
