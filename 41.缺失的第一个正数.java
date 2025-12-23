@@ -8,36 +8,28 @@
 // @lc code=start
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        int res = 1;
-        // for (int i = 0; i < nums.length; i++) {
-        //     if (res < nums[i]) {
-        //         continue;
-        //     } else if (res == nums[i]){
-        //         res++;
-        //     }
-        // }
-        // return res;
-
-        for (int i = 0; i < nums.length; i++) {
-            while (nums[i] < nums.length && nums[i] >= 0 && nums[i] != i) {
-                // System.out.println(i + " " + nums[i] + " " + nums[nums[i]]);
-                int temp = nums[i];
-                nums[i] = nums[nums[i]];
-                nums[temp] = temp;
+        int len = nums.length;
+        for (int i = 0; i < len; i++) {
+            while (nums[i] > 0 
+                && nums[i] <= len 
+                && nums[nums[i] - 1] != nums[i]) {
+                swap(nums, nums[i] - 1, i);
             }
         }
 
-        for (int i = 0; i < nums.length; i++) {
-            System.out.print(nums[i] + " ");
-            if (nums[i] != i && i != 0) {
-                res = i;
-                break;
-            }
-            if (i == nums.length - 1) {
-                res = nums[i] + 1;
+        for (int i = 0; i < len; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
             }
         }
-        return res;
+
+        return len + 1;
+    }
+
+    private void swap(int[] nums, int index1, int index2) {
+        int temp = nums[index1];
+        nums[index1] = nums[index2];
+        nums[index2] = temp;
     }
 }
 // @lc code=end
