@@ -10,15 +10,15 @@ class Solution {
     public int trap(int[] height) {
         int res = 0;
         int left = 0, right = height.length - 1;
-        int leftMax = height[left], rightMax = height[right];
+        int maxLeft = height[0], maxRight = height[right];
         while (left < right) {
-            leftMax = Math.max(height[left], leftMax);
-            rightMax = Math.max(height[right], rightMax);
-            if (leftMax <= rightMax) {
-                res += leftMax - height[left];
+            maxLeft = Math.max(maxLeft, height[left]);
+            maxRight = Math.max(maxRight, height[right]);
+            if (maxLeft < maxRight) {
+                res += maxLeft - height[left];
                 left++;
             } else {
-                res += rightMax - height[right];
+                res += maxRight - height[right];
                 right--;
             }
         }
