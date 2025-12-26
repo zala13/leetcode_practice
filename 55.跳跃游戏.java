@@ -1,40 +1,31 @@
 /*
- * @lc app=leetcode.cn id=45 lang=java
+ * @lc app=leetcode.cn id=55 lang=java
  * @lcpr version=30305
  *
- * [45] 跳跃游戏 II
+ * [55] 跳跃游戏
  */
 
 // @lc code=start
 class Solution {
-    public int jump(int[] nums) {
+    public boolean canJump(int[] nums) {
         if (nums.length == 1) {
-            // return true;
-            return 0;
-        }
-        if (nums[0] >= nums.length) {
-            return 1;
+            return true;
         }
         int maxDist = 0;
         int step = 0;
-        int nextDist = 0;
+        int nextDist = nums[0];
         for (int i = 0; i < nums.length; i++) {
             int curDist = nums[i] + i;
             maxDist = Math.max(maxDist, curDist);
             if (i == nextDist) {
                 if (nextDist == maxDist && maxDist < nums.length - 1) {
-                    // return false;
-                    return -1;
+                    return false;
                 }
                 nextDist = maxDist;
                 step++;
-                if (nextDist >= nums.length - 1) {
-                    return step;
-                }
             }
         }
-        // return true;
-        return -1;
+        return true;
     }
 }
 // @lc code=end
@@ -47,7 +38,7 @@ class Solution {
 // @lcpr case=end
 
 // @lcpr case=start
-// [2,3,0,1,4]\n
+// [3,2,1,0,4]\n
 // @lcpr case=end
 
  */
